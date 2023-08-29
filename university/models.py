@@ -11,17 +11,11 @@ class Settings(models.Model):
 class University(models.Model):
     name = models.CharField(max_length=100)
     domain = models.CharField(max_length=300)
-    settings = models.ForeignKey(Settings, on_delete=models.CASCADE)
-    admin = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f'{self.name}'
-
-
-class Department(models.Model):
-    name = models.CharField(max_length=100)
-    code = models.CharField(max_length=100)
-    university = models.ForeignKey(University, on_delete=models.CASCADE)
+    settings = models.ForeignKey(Settings, on_delete=models.DO_NOTHING, null=True, blank=True)
+    admin = models.ForeignKey(UserAccount, on_delete=models.DO_NOTHING, related_name='university_admin')
+    doc_url = models.CharField(max_length=300)
+    is_approved = models.BooleanField(default=False)
+    is_banned = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.name}'

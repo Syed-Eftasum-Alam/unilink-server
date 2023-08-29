@@ -49,6 +49,10 @@ INSTALLED_APPS = [
     'djoser',
     'users',
     'university',
+    'department',
+    'forum',
+    'course',
+    'chat',
 ]
 
 MIDDLEWARE = [
@@ -152,9 +156,13 @@ SITE_NAME = getenv('SITE_NAME')
 
 # Full Docs: https://djoser.readthedocs.io/en/latest/settings.html
 DJOSER = {
-    'PASSWORD_RESET_CONFIRM_URL': 'password-reset/{uid}/{token}',
+    'SERIALIZERS': {
+        'user_create_password_retype': 'users.serializers.CustomUserCreateSerializerRetype',
+        'current_user': 'users.serializers.UserAccountSerializer',
+    },
+    'PASSWORD_RESET_CONFIRM_URL': 'nl/password-reset/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
-    'ACTIVATION_URL': 'activation/{uid}/{token}',
+    'ACTIVATION_URL': 'nl/activation/{uid}/{token}',
     'USER_CREATE_PASSWORD_RETYPE': True,
     'SET_PASSWORD_RETYPE': True,
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
@@ -163,7 +171,7 @@ DJOSER = {
 
 # Cookie Settings
 AUTH_COOKIE = 'access'
-AUTH_COOKIE_ACCESS_MAX_AGE = 60 * 5  # 5 Min
+AUTH_COOKIE_ACCESS_MAX_AGE = 60 * 60 * 24  # 5 Min
 AUTH_COOKIE_REFRESH_MAX_AGE = 60 * 60 * 24  # 1 Day
 AUTH_COOKIE_MAX_AGE = 60 * 60 * 24
 AUTH_COOKIE_SECURE = getenv('AUTH_COOKIE_SECURE', 'True') == 'True'
